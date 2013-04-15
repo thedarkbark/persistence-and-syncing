@@ -1,6 +1,5 @@
 //
 //  NAPersistentObject.m
-//  Note All
 //
 //  Created by Ken Worley on 8/1/12.
 //
