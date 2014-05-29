@@ -8,8 +8,6 @@
 #import "NAPersistentObject.h"
 #import <objc/runtime.h>
 
-static NSMutableDictionary *propertyMap = nil;
-
 #define ISDYNAMIC(propertyName) ([self respondsToSelector:NSSelectorFromString([NSString stringWithFormat:@"%@%@", @"noEncode", propertyName])])
 
 @implementation NAPersistentObject
@@ -63,6 +61,7 @@ static NSMutableDictionary *propertyMap = nil;
 
 -(NSArray*)getPropertyNames
 {
+  static NSMutableDictionary *propertyMap = nil;  
   static dispatch_once_t onceToken;
   dispatch_once(&onceToken, ^{
     propertyMap = [[NSMutableDictionary alloc] init];
@@ -70,7 +69,11 @@ static NSMutableDictionary *propertyMap = nil;
 
   Class c = [self class];
   NSString *className = NSStringFromClass(c);
-  NSMutableArray *propertyNames = [propertyMap objectForKey:className];
+  NSMutableArray *propertyNames = nil;
+  @synchronized(propertyMap)
+  {
+    propertyNames = [propertyMap objectForKey:className];
+  }
   if (propertyNames)
     return propertyNames;
   
@@ -82,9 +85,11 @@ static NSMutableDictionary *propertyMap = nil;
     c = [c superclass];
   }
   
-  [propertyMap setObject:propertyNames forKey:className];
-  
-  NSLog(@"%@", propertyNames);
+  @synchronized(propertyMap)
+  {
+    [propertyMap setObject:propertyNames forKey:className];
+    NSLog(@"%@", propertyNames);
+  }
   
   return propertyNames;
 }
