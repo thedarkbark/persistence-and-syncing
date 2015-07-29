@@ -1,7 +1,8 @@
 //
 //  NAPersistentObject.m
 //
-//  Created by Ken Worley on 8/1/12.
+//  Created by Ken Worley
+//  Copyright (c) 2012-2015 Ken Worley. All rights reserved.
 //
 //
 
@@ -88,7 +89,7 @@
   @synchronized(propertyMap)
   {
     [propertyMap setObject:propertyNames forKey:className];
-    NSLog(@"%@", propertyNames);
+    //NSLog(@"%@", propertyNames);
   }
   
   return propertyNames;

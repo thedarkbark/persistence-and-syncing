@@ -1,7 +1,8 @@
 //
 //  NAPersistentObject.h
 //
-//  Created by Ken Worley on 8/1/12.
+//  Created by Ken Worley 
+//  Copyright (c) 2012-2015 Ken Worley. All rights reserved.
 //
 // An object of this class can be written to disk/data and recreated
 // later. All properties of the object will be persisted as long as
