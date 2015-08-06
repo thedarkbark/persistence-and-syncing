@@ -110,9 +110,8 @@ DYNAMIC(readTime);
 
 -(void)entitySaved
 {
-    dispatch_async(dispatch_get_main_queue(), ^{
-        [[NSNotificationCenter defaultCenter] postNotificationName:NASyncableObjectSavedNotification object:self];
-    });
+  // Send notification immediately on the current thread.
+  [[NSNotificationCenter defaultCenter] postNotificationName:NASyncableObjectSavedNotification object:self];
 }
 
 -(void)saveToFile:(NSString*)path
